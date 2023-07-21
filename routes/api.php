@@ -1,9 +1,9 @@
 <?php
 
-use App\Http\Controllers\Api\ApiAccessTokensController;
+use App\Http\Controllers\Api\auth\ApiAccessTokensController;
 use App\Http\Controllers\Api\auth\RegisterController;
 use App\Http\Controllers\Api\PharmacistController;
-use App\Http\Controllers\Api\StockController;
+use App\Http\Controllers\Api\stock\StockController;
 
 /*
 |--------------------------------------------------------------------------
