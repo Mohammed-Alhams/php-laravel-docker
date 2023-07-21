@@ -28,6 +28,8 @@ Route::controller(RegisterController::class)->group(function(){
     Route::post('login', 'login');
 });
 
-Route::apiResource("/stocks", StockController::class);
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::apiResource("/stocks", StockController::class);
 
-Route::apiResource("/account", PharmacistController::class);
+//    Route::apiResource("/account", PharmacistController::class);
+});

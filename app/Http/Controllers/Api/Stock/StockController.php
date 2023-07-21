@@ -96,7 +96,7 @@ class StockController extends BaseController
             return $this->sendError('Validation Error.', $validator->errors());
         }
 
-        $stock->updated($request->all());
+        $stock->update($request->all());
 
         return $this->sendResponse($stock, "Stock updated successfully");
     }
