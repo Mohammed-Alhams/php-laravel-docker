@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\Api\Stock;
 
+use App\Http\Controllers\Api\BaseController;
 use App\Http\Controllers\Controller;
 use App\Models\Stock;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
+use Validator;
+use function Illuminate\Support\Facades\Validator;
 
-class StockController extends Controller
+class StockController extends BaseController
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +20,8 @@ class StockController extends Controller
     public function index()
     {
         //
-        return Stock::paginate();
+
+        return $this->sendResponse(Stock::paginate(), "Stocks retrieved successfully.");
     }
 
     /**
@@ -28,7 +32,7 @@ class StockController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'name' => 'required|max:255|string',
             'price' => 'required|numeric',
             'quantity' => 'required|numeric',
@@ -40,9 +44,13 @@ class StockController extends Controller
             'quantity_by_boxes' => 'required|numeric',
         ]);
 
+        if ($validator->fails()){
+            return $this->sendError('Validation Error.', $validator->errors());
+        }
+
         $stock = Stock::create($request->all());
 
-        return Response::json($stock, 201);
+        return $this->sendResponse($stock, "Stock created successfully");
     }
 
     /**
@@ -54,7 +62,12 @@ class StockController extends Controller
     public function show($id)
     {
         //
-        return Stock::findOrFail($id);
+        $stock = Stock::find($id);
+        if (is_null($stock)){
+            return $this->sendError('Stock not found.');
+        }
+
+        return $this->sendResponse($stock, "Stock retrieved successfully.");
     }
 
     /**
@@ -67,7 +80,7 @@ class StockController extends Controller
     public function update(Request $request, Stock $stock)
     {
         //
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'name' => 'sometimes|required|max:255|string',
             'price' => 'sometimes|required|numeric',
             'quantity' => 'sometimes|required|numeric',
@@ -79,9 +92,13 @@ class StockController extends Controller
             'quantity_by_boxes' => 'sometimes|required|numeric',
         ]);
 
-        $stock->update($request->all());
+        if ($validator->fails()){
+            return $this->sendError('Validation Error.', $validator->errors());
+        }
 
-        return Response::json($stock);
+        $stock->updated($request->all());
+
+        return $this->sendResponse($stock, "Stock updated successfully");
     }
 
     /**
@@ -93,9 +110,6 @@ class StockController extends Controller
     public function destroy($id)
     {
         //
-        Stock::destroy($id);
-        return Response::json([
-            'message' => 'Stock deleted successfully'
-        ]);
+        return $this->sendResponse(Stock::destroy($id), "Stock deleted successfully");
     }
 }
