@@ -35,7 +35,7 @@ return [
     ],
 
     'stripe' => [
-        'model' => App\Pharmacist::class,
+        'model' => \App\Models\Pharmacist::class,
         'key' => env('STRIPE_KEY'),
         'secret' => env('STRIPE_SECRET'),
         'webhook' => [

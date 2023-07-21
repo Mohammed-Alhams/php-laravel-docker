@@ -1,6 +1,9 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api\ApiAccessTokensController;
+use App\Http\Controllers\Api\auth\RegisterController;
+use App\Http\Controllers\Api\PharmacistController;
+use App\Http\Controllers\Api\StockController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +16,18 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+//Route::middleware('auth:api')->get('/user', function (Request $request) {
+//    return $request->user();
+//});
+
+Route::post("auth/access-tokens", [ApiAccessTokensController::class, 'store'])
+    ->middleware('guest:sanctum');
+
+Route::controller(RegisterController::class)->group(function(){
+    Route::post('register', 'register');
+    Route::post('login', 'login');
 });
+
+Route::apiResource("/stocks", StockController::class);
+
+Route::apiResource("/account", PharmacistController::class);
