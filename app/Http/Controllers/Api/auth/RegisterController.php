@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api\auth;
 
-use App\Http\Controllers\API\BaseController;
+use App\Http\Controllers\Api\BaseController;
 use App\Models\Pharmacist;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
