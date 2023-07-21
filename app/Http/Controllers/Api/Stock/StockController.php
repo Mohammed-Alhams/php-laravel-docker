@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\stock;
+namespace App\Http\Controllers\Api\Stock;
 
 use App\Http\Controllers\Controller;
 use App\Models\Stock;
