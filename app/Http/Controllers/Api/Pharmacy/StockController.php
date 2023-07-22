@@ -14,11 +14,11 @@ class StockController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-
-        return $this->sendResponse(Stock::paginate(), "Stocks retrieved successfully.");
+        $stocks = Stock::filter($request->query())->paginate();
+        return $this->sendResponse($stocks, "Stocks retrieved successfully.");
     }
 
     /**

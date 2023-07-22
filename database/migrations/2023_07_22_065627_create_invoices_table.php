@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      *
@@ -17,7 +16,6 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->foreignId('stock_id')->constrained('stocks')->cascadeOnDelete();
             $table->unsignedSmallInteger('quantity')->default(1);
-            $table->foreignId('pharmacist_id')->constrained('pharmacists')->cascadeOnDelete();
             $table->unsignedInteger('invoice_no');
             $table->text('description')->nullable();
             $table->timestamps();

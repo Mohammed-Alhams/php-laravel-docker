@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -19,5 +20,20 @@ class Invoice extends Model
 
     public function stock(){
         return $this->belongsTo(Stock::class);
+    }
+
+    public function scopeFilter(Builder $builder, $filters)
+    {
+
+        $options = array_merge(
+            [
+                'invoice_no' => null,
+            ], $filters
+        );
+
+        $builder->when($options['invoice_no'] ?? false, function($builder, $value) {
+            $builder->where('invoice_no', '=', $value);
+        });
+
     }
 }

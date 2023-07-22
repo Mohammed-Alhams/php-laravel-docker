@@ -16,10 +16,12 @@ class InvoiceController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-        return $this->sendResponse(Invoice::paginate(), "Invoices retrieved successfully.");
+        $stocks = Invoice::filter($request->query())->paginate();
+
+        return $this->sendResponse($stocks, "Invoices retrieved successfully.");
     }
 
     /**
@@ -30,18 +32,27 @@ class InvoiceController extends BaseController
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'stock_id' => ['required', 'int', 'exists:stocks,id'],
-            'pharmacist_id' => ['required', 'int', 'exists:pharmacists,id'],
-            'quantity' => ['nullable', 'int', 'min:1'],
-            'invoice_no' => ['required', 'int']
+        $input = $request->query();
+
+        $stock = Stock::where('barcode', '=', $input['barcode'])->first();
+
+        if (is_null($stock)){
+            return $this->sendError("Stock doesn't exist.");
+        }
+
+        $input['stock_id'] = $stock->id;
+        $validator = Validator::make($input, [
+            'quantity' => ['required', 'nullable', 'int', 'min:1'],
+            'invoice_no' => ['required', 'int'],
+            'barcode' => ['required', 'int'],
+            'id' => ['exists:stocks', 'unique:stores'],
         ]);
 
         if ($validator->fails()){
             return $this->sendError('Validation Error.', $validator->errors());
         }
 
-        $invoice = Invoice::create($request->all());
+        $invoice = Invoice::create($input);
 
         return $this->sendResponse($invoice, "Invoice created successfully");
     }
