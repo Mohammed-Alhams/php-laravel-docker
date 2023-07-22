@@ -1,14 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Api\Stock;
+namespace App\Http\Controllers\Api\Pharmacy;
 
 use App\Http\Controllers\Api\BaseController;
-use App\Http\Controllers\Controller;
 use App\Models\Stock;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Response;
 use Validator;
-use function Illuminate\Support\Facades\Validator;
 
 class StockController extends BaseController
 {

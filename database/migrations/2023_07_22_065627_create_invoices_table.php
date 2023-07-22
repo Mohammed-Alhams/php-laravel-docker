@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('invoices', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->foreignId('stock_id')->constrained('stocks')->cascadeOnDelete();
+            $table->unsignedSmallInteger('quantity')->default(1);
             $table->foreignId('pharmacist_id')->constrained('pharmacists')->cascadeOnDelete();
             $table->unsignedInteger('invoice_no');
             $table->text('description')->nullable();

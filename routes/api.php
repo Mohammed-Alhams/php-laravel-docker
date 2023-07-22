@@ -3,7 +3,7 @@
 use App\Http\Controllers\Api\Auth\ApiAccessTokensController;
 use App\Http\Controllers\Api\Auth\RegisterController;
 use App\Http\Controllers\Api\PharmacistController;
-use App\Http\Controllers\Api\Stock\StockController;
+use App\Http\Controllers\Api\Pharmacy\StockController;
 
 /*
 |--------------------------------------------------------------------------

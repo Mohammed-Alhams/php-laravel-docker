@@ -19,6 +19,12 @@ class Stock extends Model
         'unit_wholesale_price',
         'quantity_by_boxes',
         'expiration_date',
+        'pharmacy_id'
     ];
+
+    public function pharmacy()
+    {
+        return $this->belongsTo(Pharmacy::class);
+    }
 
 }
