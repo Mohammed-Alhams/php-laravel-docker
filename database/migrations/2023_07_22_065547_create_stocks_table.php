@@ -15,6 +15,7 @@ class CreateStocksTable extends Migration
     {
         Schema::create('stocks', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('pharmacy_id')->constrained('pharmacies')->cascadeOnDelete();
             $table->string('name');
             $table->string('barcode');
             $table->integer("quantity_by_units");
@@ -25,6 +26,7 @@ class CreateStocksTable extends Migration
             $table->integer("quantity_by_boxes");
             $table->timestamp("expiration_date")->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
