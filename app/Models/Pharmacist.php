@@ -17,7 +17,7 @@ class Pharmacist extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'pharmacy_id'
     ];
 
     /**
@@ -42,8 +42,8 @@ class Pharmacist extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function pharmacy()
+    public function store()
     {
-        return $this->belongsTo(Pharmacy::class);
+        return $this->belongsTo(Stores::class);
     }
 }

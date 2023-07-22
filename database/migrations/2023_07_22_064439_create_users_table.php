@@ -15,7 +15,7 @@ class CreateUsersTable extends Migration
     {
         Schema::create('pharmacists', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('pharmacy_id')->constrained('pharmacies')->cascadeOnDelete();
+            $table->foreignId('pharmacy_id')->constrained('stores')->cascadeOnDelete();
             $table->enum('type', ['user', 'admin', 'super-admin'])->default('user');
             $table->string('name');
             $table->string('email')->unique();

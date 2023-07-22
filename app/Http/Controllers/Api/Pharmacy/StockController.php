@@ -33,12 +33,13 @@ class StockController extends BaseController
             'name' => 'required|max:255|string',
             'price' => 'required|numeric',
             'quantity' => 'required|numeric',
-            'barcode' => 'required|max:255|string',
+            'barcode' => 'required|max:255|string|unique:stocks',
             'unit_price' => 'required|numeric',
             'box_price' => 'required|numeric',
             'box_wholesale_price' => 'required|numeric',
             'unit_wholesale_price' => 'required|numeric',
             'quantity_by_boxes' => 'required|numeric',
+            'pharmacy_id' => 'required|numeric|exists:stores,id',
         ]);
 
         if ($validator->fails()){
@@ -87,6 +88,7 @@ class StockController extends BaseController
             'box_wholesale_price' => 'sometimes|required|numeric',
             'unit_wholesale_price' => 'sometimes|required|numeric',
             'quantity_by_boxes' => 'sometimes|required|numeric',
+            'pharmacy_id' => 'required|numeric',
         ]);
 
         if ($validator->fails()){

@@ -22,9 +22,9 @@ class Stock extends Model
         'pharmacy_id'
     ];
 
-    public function pharmacy()
+    public function store()
     {
-        return $this->belongsTo(Pharmacy::class);
+        return $this->belongsTo(Stores::class);
     }
 
 }

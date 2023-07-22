@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\Auth\ApiAccessTokensController;
 use App\Http\Controllers\Api\Auth\RegisterController;
 use App\Http\Controllers\Api\PharmacistController;
+use App\Http\Controllers\Api\Pharmacy\InvoiceController;
 use App\Http\Controllers\Api\Pharmacy\PharmacyController;
 use App\Http\Controllers\Api\Pharmacy\StockController;
 
@@ -33,6 +34,8 @@ Route::apiResource("/pharmacy", PharmacyController::class);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::apiResource("/stocks", StockController::class);
+
+    Route::apiResource("/invoices", InvoiceController::class);
 
 //    Route::apiResource("/account", PharmacistController::class);
 });

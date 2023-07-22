@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\Pharmacy;
 
 use App\Http\Controllers\Api\BaseController;
-use App\Models\Pharmacy;
+use App\Models\Stores;
 use Illuminate\Http\Request;
 use Validator;
 
@@ -17,7 +17,7 @@ class PharmacyController extends BaseController
     public function index()
     {
         //
-        return $this->sendResponse(Pharmacy::paginate(), "Pharmacies retrieved successfully.");
+        return $this->sendResponse(Stores::paginate(), "Pharmacies retrieved successfully.");
     }
 
     /**
@@ -37,9 +37,9 @@ class PharmacyController extends BaseController
             return $this->sendError('Validation Error.', $validator->errors());
         }
 
-        $pharmacy = Pharmacy::create($request->all());
+        $pharmacy = Stores::create($request->all());
 
-        return $this->sendResponse($pharmacy, "Pharmacy created successfully");
+        return $this->sendResponse($pharmacy, "Stores created successfully");
     }
 
     /**
@@ -51,9 +51,9 @@ class PharmacyController extends BaseController
     public function show($id)
     {
         //
-        $pharmacy = Pharmacy::find($id);
+        $pharmacy = Stores::find($id);
         if (is_null($pharmacy)) {
-            return $this->sendError('Pharmacy not found.');
+            return $this->sendError('Stores not found.');
         }
 
         return $this->sendResponse($pharmacy, "Stock retrieved successfully.");
@@ -80,6 +80,6 @@ class PharmacyController extends BaseController
     public function destroy($id)
     {
         //
-        return $this->sendResponse(Pharmacy::destroy($id), "Pharmacy deleted successfully");
+        return $this->sendResponse(Stores::destroy($id), "Stores deleted successfully");
     }
 }

@@ -14,7 +14,7 @@ class Invoice extends Model
     ];
 
     public function pharmacist(){
-        return $this->belongsTo(Pharmacy::class);
+        return $this->belongsTo(Stores::class);
     }
 
     public function stock(){
