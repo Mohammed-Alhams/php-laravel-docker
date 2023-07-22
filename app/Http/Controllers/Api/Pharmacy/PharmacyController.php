@@ -17,6 +17,7 @@ class PharmacyController extends BaseController
     public function index()
     {
         //
+        return $this->sendResponse(Pharmacy::paginate(), "Pharmacies retrieved successfully.");
     }
 
     /**
