@@ -1,14 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Api\Stock;
+namespace App\Http\Controllers\Api\Pharmacy;
 
 use App\Http\Controllers\Api\BaseController;
-use App\Http\Controllers\Controller;
 use App\Models\Stock;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Response;
 use Validator;
-use function Illuminate\Support\Facades\Validator;
 
 class StockController extends BaseController
 {
@@ -17,11 +14,11 @@ class StockController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-
-        return $this->sendResponse(Stock::paginate(), "Stocks retrieved successfully.");
+        $stocks = Stock::filter($request->query())->paginate();
+        return $this->sendResponse($stocks, "Stocks retrieved successfully.");
     }
 
     /**
@@ -36,12 +33,13 @@ class StockController extends BaseController
             'name' => 'required|max:255|string',
             'price' => 'required|numeric',
             'quantity' => 'required|numeric',
-            'barcode' => 'required|max:255|string',
+            'barcode' => 'required|max:255|string|unique:stocks',
             'unit_price' => 'required|numeric',
             'box_price' => 'required|numeric',
             'box_wholesale_price' => 'required|numeric',
             'unit_wholesale_price' => 'required|numeric',
             'quantity_by_boxes' => 'required|numeric',
+            'pharmacy_id' => 'required|numeric|exists:stores,id',
         ]);
 
         if ($validator->fails()){
@@ -90,6 +88,7 @@ class StockController extends BaseController
             'box_wholesale_price' => 'sometimes|required|numeric',
             'unit_wholesale_price' => 'sometimes|required|numeric',
             'quantity_by_boxes' => 'sometimes|required|numeric',
+            'pharmacy_id' => 'required|numeric',
         ]);
 
         if ($validator->fails()){

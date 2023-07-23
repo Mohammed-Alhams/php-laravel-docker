@@ -14,7 +14,9 @@ class CreateUsersTable extends Migration
     public function up()
     {
         Schema::create('pharmacists', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
+            $table->foreignId('pharmacy_id')->constrained('stores')->cascadeOnDelete();
+            $table->enum('type', ['user', 'admin', 'super-admin'])->default('user');
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();

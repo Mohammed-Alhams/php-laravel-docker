@@ -3,7 +3,9 @@
 use App\Http\Controllers\Api\Auth\ApiAccessTokensController;
 use App\Http\Controllers\Api\Auth\RegisterController;
 use App\Http\Controllers\Api\PharmacistController;
-use App\Http\Controllers\Api\Stock\StockController;
+use App\Http\Controllers\Api\Pharmacy\InvoiceController;
+use App\Http\Controllers\Api\Pharmacy\PharmacyController;
+use App\Http\Controllers\Api\Pharmacy\StockController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,8 +30,12 @@ Route::controller(RegisterController::class)->group(function(){
     Route::post('login', 'login');
 });
 
+Route::apiResource("/pharmacy", PharmacyController::class);
+
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::apiResource("/stocks", StockController::class);
+
+    Route::apiResource("/invoices", InvoiceController::class);
 
 //    Route::apiResource("/account", PharmacistController::class);
 });

@@ -22,6 +22,7 @@ class RegisterController extends BaseController
             'name' => 'required|max:255|string',
             'email' => 'required|email|unique:pharmacists',
             'password' => 'required|min:8',
+            'pharmacy_id' => ['required', 'int', 'exists:stores,id'],
         ]);
 
         if($validator->fails()){

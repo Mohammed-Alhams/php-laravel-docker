@@ -15,8 +15,9 @@ class CreateStocksTable extends Migration
     {
         Schema::create('stocks', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('pharmacy_id')->constrained('stores')->cascadeOnDelete();
             $table->string('name');
-            $table->string('barcode');
+            $table->bigInteger('barcode')->unique();
             $table->integer("quantity_by_units");
             $table->double('unit_price');
             $table->double('box_price');
@@ -25,6 +26,7 @@ class CreateStocksTable extends Migration
             $table->integer("quantity_by_boxes");
             $table->timestamp("expiration_date")->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
