@@ -32,7 +32,7 @@ Route::controller(RegisterController::class)->group(function(){
 
 Route::apiResource("/pharmacy", PharmacyController::class);
 
-Route::group(['middleware' => ['auth:sanctum']], function () {
+Route::group(['middleware' => ['auth:sanctum', 'cors']], function () {
     Route::apiResource("/stocks", StockController::class);
 
     Route::apiResource("/invoices", InvoiceController::class);
