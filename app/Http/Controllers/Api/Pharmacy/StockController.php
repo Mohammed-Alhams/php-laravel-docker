@@ -33,7 +33,7 @@ class StockController extends BaseController
             'name' => 'required|max:255|string',
             'price' => 'required|numeric',
             'quantity' => 'required|numeric',
-            'barcode' => 'required|max:255|string|unique:stocks',
+            'barcode' => 'required|max:255|numeric|unique:stocks',
             'unit_price' => 'required|numeric',
             'box_price' => 'required|numeric',
             'box_wholesale_price' => 'required|numeric',
