@@ -78,7 +78,7 @@ class StockController extends BaseController
     public function update(Request $request, Stock $stock)
     {
         //
-        $validator = Validator::make($request->all(), [
+        $validator = Validator::make($request->all()->except('pharmacy_id'), [
             'name' => 'sometimes|required|max:255|string',
             'price' => 'sometimes|required|numeric',
             'quantity' => 'sometimes|required|numeric',
@@ -88,7 +88,6 @@ class StockController extends BaseController
             'box_wholesale_price' => 'sometimes|required|numeric',
             'unit_wholesale_price' => 'sometimes|required|numeric',
             'quantity_by_boxes' => 'sometimes|required|numeric',
-            'pharmacy_id' => 'required|numeric',
         ]);
 
         if ($validator->fails()){
