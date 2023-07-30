@@ -24,7 +24,7 @@ class CreateStocksTable extends Migration
             $table->double('box_wholesale_price');
             $table->double('unit_wholesale_price');
             $table->integer("quantity_by_boxes");
-            $table->timestamp("expiration_date")->nullable();
+            $table->bigInteger("expiration_date")->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
