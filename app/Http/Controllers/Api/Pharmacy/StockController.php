@@ -88,7 +88,7 @@ class StockController extends BaseController
             'box_wholesale_price' => 'sometimes|required|numeric',
             'unit_wholesale_price' => 'sometimes|required|numeric',
             'quantity_by_boxes' => 'sometimes|required|numeric',
-            'pharmacy_id' => 'required|numeric',
+            'pharmacy_id' => 'sometimes|required|numeric',
         ]);
 
         if ($validator->fails()){
