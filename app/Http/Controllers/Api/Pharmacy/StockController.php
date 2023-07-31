@@ -31,8 +31,6 @@ class StockController extends BaseController
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:255|string',
-            'price' => 'required|numeric',
-            'quantity' => 'required|numeric',
             'barcode' => 'required|numeric|unique:stocks',
             'unit_price' => 'required|numeric',
             'box_price' => 'required|numeric',
@@ -42,7 +40,7 @@ class StockController extends BaseController
             'pharmacy_id' => 'required|numeric|exists:stores,id',
         ]);
 
-        if ($validator->fails()){
+        if ($validator->fails()) {
             return $this->sendError('Validation Error.', $validator->errors());
         }
 
@@ -54,14 +52,14 @@ class StockController extends BaseController
     /**
      * Display the specified resource.
      *
-     * @param int $id
+     * @param int $barcode
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($barcode)
     {
         //
-        $stock = Stock::find($id);
-        if (is_null($stock)){
+        $stock = Stock::where('barcode', $barcode)->first();
+        if (is_null($stock)) {
             return $this->sendError('Stock not found.');
         }
 
@@ -80,8 +78,6 @@ class StockController extends BaseController
         //
         $validator = Validator::make($request->all(), [
             'name' => 'sometimes|required|max:255|string',
-            'price' => 'sometimes|required|numeric',
-            'quantity' => 'sometimes|required|numeric',
             'barcode' => 'sometimes|required|max:255|string',
             'unit_price' => 'sometimes|required|numeric',
             'box_price' => 'sometimes|required|numeric',
@@ -90,7 +86,7 @@ class StockController extends BaseController
             'quantity_by_boxes' => 'sometimes|required|numeric',
         ]);
 
-        if ($validator->fails()){
+        if ($validator->fails()) {
             return $this->sendError('Validation Error.', $validator->errors());
         }
 
@@ -102,12 +98,13 @@ class StockController extends BaseController
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
+     * @param int $barcode
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($barcode)
     {
         //
-        return $this->sendResponse(Stock::destroy($id), "Stock deleted successfully");
+        $stock = Stock::where('barcode', $barcode)->first();
+        return $this->sendResponse(Stock::destroy($stock->id), "Stock deleted successfully");
     }
 }
