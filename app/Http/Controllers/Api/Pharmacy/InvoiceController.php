@@ -32,7 +32,7 @@ class InvoiceController extends BaseController
      */
     public function store(Request $request)
     {
-        $input = $request->query();
+        $input = $request->all();
 
         $stock = Stock::where('barcode', '=', $input['barcode'])->first();
 
@@ -45,7 +45,6 @@ class InvoiceController extends BaseController
             'quantity' => ['required', 'nullable', 'int', 'min:1'],
             'invoice_no' => ['required', 'int'],
             'barcode' => ['required', 'int'],
-            'id' => ['exists:stocks', 'unique:stores'],
         ]);
 
         if ($validator->fails()){
