@@ -14,10 +14,9 @@ class CreateStocksTable extends Migration
     public function up()
     {
         Schema::create('stocks', function (Blueprint $table) {
-            $table->id();
+            $table->bigInteger('id')->primary();
             $table->foreignId('pharmacy_id')->constrained('stores')->cascadeOnDelete();
             $table->string('name');
-            $table->bigInteger('barcode')->unique();
             $table->integer("quantity_by_units");
             $table->double('unit_price');
             $table->double('box_price');

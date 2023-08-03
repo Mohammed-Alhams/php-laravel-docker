@@ -31,7 +31,7 @@ class StockController extends BaseController
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:255|string',
-            'barcode' => 'required|numeric|unique:stocks',
+            'id' => 'required|numeric|unique:stocks',
             'unit_price' => 'required|numeric',
             'box_price' => 'required|numeric',
             'box_wholesale_price' => 'required|numeric',
@@ -78,7 +78,7 @@ class StockController extends BaseController
         //
         $validator = Validator::make($request->all(), [
             'name' => 'sometimes|required|max:255|string',
-            'barcode' => 'sometimes|required|max:255|string',
+            'id' => 'sometimes|required|max:255|string',
             'unit_price' => 'sometimes|required|numeric',
             'box_price' => 'sometimes|required|numeric',
             'box_wholesale_price' => 'sometimes|required|numeric',

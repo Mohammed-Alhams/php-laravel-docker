@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
@@ -14,10 +15,11 @@ return new class extends Migration {
     {
         Schema::create('invoices', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->foreignId('stock_id')->constrained('stocks')->cascadeOnDelete();
             $table->unsignedSmallInteger('quantity')->default(1);
-            $table->unsignedInteger('invoice_no');
+            $table->string('invoice_no');
             $table->text('description')->nullable();
+            $table->bigInteger('invoice_time')->default(Carbon::now()->getTimestamp());
+            $table->bigInteger("total_price")->default(0);
             $table->timestamps();
         });
     }
