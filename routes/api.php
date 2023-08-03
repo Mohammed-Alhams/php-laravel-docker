@@ -37,6 +37,4 @@ Route::group(['middleware' => ['auth:sanctum', 'cors']], function () {
     Route::apiResource("/stocks", StockController::class);
 
     Route::apiResource("/invoices", CheckoutController::class);
-
-//    Route::apiResource("/account", PharmacistController::class);
 });

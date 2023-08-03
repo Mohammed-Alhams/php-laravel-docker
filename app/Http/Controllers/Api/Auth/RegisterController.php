@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Api\BaseController;
 use App\Models\Pharmacist;
+use App\Models\UserPayment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Validator;
@@ -23,6 +24,10 @@ class RegisterController extends BaseController
             'email' => 'required|email|unique:pharmacists',
             'password' => 'required|min:8',
             'pharmacy_id' => ['required', 'int', 'exists:stores,id'],
+            'card_number' => ['required', 'string', 'size:16'],
+            'card_holder_name' => ['required', 'string', 'max:255'],
+            'card_expiry_date' => ['required', 'string', 'size:5'],
+            'card_cvv' => ['required', 'string', 'size:3'],
         ]);
 
         if($validator->fails()){
@@ -35,6 +40,9 @@ class RegisterController extends BaseController
         $user = Pharmacist::create($input);
         $success['token'] =  $user->createToken($request->userAgent())->plainTextToken;
         $success['name'] =  $user->name;
+
+        $request['pharmacist_id'] = $user->id;
+        UserPayment::create($request->all());
 
         return $this->sendResponse($success, 'User register successfully.');
     }
