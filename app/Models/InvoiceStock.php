@@ -10,7 +10,7 @@ class InvoiceStock extends Pivot
 {
     use HasFactory;
 
-    protected $table = 'invoice_items';
+    protected $table = 'invoice_stocks';
 
     public $incrementing = true;
 

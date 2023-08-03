@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('invoice_items', function (Blueprint $table) {
+        Schema::create('invoice_stocks', function (Blueprint $table) {
             $table->id();
             $table->foreignId('invoice_id')->constrained("invoices")->cascadeOnDelete();
             $table->bigInteger('stock_id')->constrained("stocks")->cascadeOnDelete();
