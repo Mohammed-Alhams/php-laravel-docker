@@ -12,7 +12,7 @@ class Stock extends Model
 
     protected $fillable = [
         'name',
-        'barcode',
+        'id',
         'quantity_by_units',
         'unit_price',
         'box_price',

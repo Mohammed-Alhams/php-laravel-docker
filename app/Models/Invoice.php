@@ -18,8 +18,13 @@ class Invoice extends Model
         return $this->belongsTo(Stores::class);
     }
 
-    public function stock(){
-        return $this->belongsTo(Stock::class);
+    public function stocks()
+    {
+        return $this->belongsToMany(Stock::class, 'invoice_stocks', 'invoice_id', 'stock_id', 'id', 'id')
+            ->using(InvoiceStock::class)
+            ->withPivot([
+                'name', 'price', 'unit_price', 'barcode',
+            ]);
     }
 
     public function scopeFilter(Builder $builder, $filters)
