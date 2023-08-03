@@ -41,6 +41,16 @@ class CheckoutController extends BaseController
             'invoice_no' => ['required', 'string', 'unique:invoices,invoice_no'],
         ]);
 
+        //check if quantity is in stock
+        if ($request->stocks){
+            foreach ($request->stocks as $stock) {
+                $stockModel = Stock::find($stock['id']);
+                if ($stockModel['quantity_by_units'] < $stock['quantity']){
+                    return $this->sendError('Validation Error.', 'Quantity is not in stock');
+                }
+            }
+        }
+
         if ($validator->fails()) {
             return $this->sendError('Validation Error.', $validator->errors());
         }
@@ -52,6 +62,9 @@ class CheckoutController extends BaseController
         foreach ($request->stocks as $stock) {
             $stockModel = Stock::find($stock['id']);
             $totalPrice += ($stockModel['unit_price'] * $stock['quantity']);
+            $stockModel->update([
+                'quantity_by_units' => (($stockModel['quantity_by_units'] - $stock['quantity'])),
+            ]);
         }
 
         try {
@@ -109,6 +122,16 @@ class CheckoutController extends BaseController
             'stocks.*.quantity' => ['sometimes', 'required', 'int', 'min:1'],
         ]);
 
+        //check if quantity is in stock
+        if ($request->stocks){
+            foreach ($request->stocks as $stock) {
+                $stockModel = Stock::find($stock['id']);
+                if ($stockModel['quantity_by_units'] < $stock['quantity']){
+                    return $this->sendError('Validation Error.', 'Quantity is not in stock');
+                }
+            }
+        }
+
         if ($validator->fails()) {
             return $this->sendError('Validation Error.', $validator->errors());
         }
@@ -121,6 +144,9 @@ class CheckoutController extends BaseController
             foreach ($request->stocks as $stock) {
                 $stockModel = Stock::find($stock['id']);
                 $totalPrice += ($stockModel['unit_price'] * $stock['quantity']);
+                $stockModel->update([
+                    'quantity_by_units' => ($stockModel['quantity_by_units'] - $stock['quantity']),
+                ]);
             }
         }
 
