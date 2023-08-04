@@ -2,9 +2,8 @@
 
 use App\Http\Controllers\Api\Auth\ApiAccessTokensController;
 use App\Http\Controllers\Api\Auth\RegisterController;
-use App\Http\Controllers\Api\PharmacistController;
+use App\Http\Controllers\Api\Pharmacy\AnalyticsController;
 use App\Http\Controllers\Api\Pharmacy\CheckoutController;
-use App\Http\Controllers\Api\Pharmacy\InvoiceController;
 use App\Http\Controllers\Api\Pharmacy\PharmacyController;
 use App\Http\Controllers\Api\Pharmacy\StockController;
 
@@ -38,5 +37,16 @@ Route::group(['middleware' => ['auth:sanctum', 'cors']], function () {
 
     Route::apiResource("/invoices", CheckoutController::class);
 
-//    Route::apiResource("/account", PharmacistController::class);
+    Route::controller(AnalyticsController::class)->group(function(){
+        Route::get('best-selling', 'bestSelling');
+        Route::get('restocking-analysis', 'restockingAnalysis');
+        Route::get('sells-summary', 'sellsTotalPricesSummary');
+        Route::get('average-sells', 'averageTransactionValue');
+        Route::get('total-revenue', 'totalSalesRevenue');
+        Route::get('expired-stocks', 'expiredStocks');
+        Route::get('low-performing-stocks', 'lowPerformingStocks');
+        Route::get('customer-preferences', 'customerPreferences');
+        Route::get('operational-efficiency', 'operationalEfficiency');
+        Route::get("busiest-times", "busiestTimes");
+    });
 });

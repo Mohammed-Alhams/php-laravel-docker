@@ -15,7 +15,6 @@ return new class extends Migration {
     {
         Schema::create('invoices', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedSmallInteger('quantity')->default(1);
             $table->string('invoice_no');
             $table->text('description')->nullable();
             $table->bigInteger('invoice_time')->default(Carbon::now()->getTimestamp());
