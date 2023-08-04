@@ -48,5 +48,7 @@ Route::group(['middleware' => ['auth:sanctum', 'cors']], function () {
         Route::get('customer-preferences', 'customerPreferences');
         Route::get('operational-efficiency', 'operationalEfficiency');
         Route::get("busiest-times", "busiestTimes");
+        Route::get('all-analysis', 'allAnalysis');
+        Route::get('busiest-days', 'busiestDays');
     });
 });
