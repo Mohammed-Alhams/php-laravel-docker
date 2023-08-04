@@ -45,6 +45,9 @@ class CheckoutController extends BaseController
         if ($request->stocks){
             foreach ($request->stocks as $stock) {
                 $stockModel = Stock::find($stock['id']);
+                if (is_null($stockModel)){
+                    return $this->sendError('Stock not found');
+                }
                 if ($stockModel['quantity_by_units'] < $stock['quantity']){
                     return $this->sendError('Validation Error.', 'Quantity is not in stock');
                 }
@@ -126,6 +129,9 @@ class CheckoutController extends BaseController
         if ($request->stocks){
             foreach ($request->stocks as $stock) {
                 $stockModel = Stock::find($stock['id']);
+                if (is_null($stockModel)){
+                    return $this->sendError('Stock not found');
+                }
                 if ($stockModel['quantity_by_units'] < $stock['quantity']){
                     return $this->sendError('Validation Error.', 'Quantity is not in stock');
                 }

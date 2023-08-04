@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Pharmacy;
 use App\Http\Controllers\Api\BaseController;
 use App\Http\Controllers\Controller;
 use App\Models\Invoice;
+use App\Models\InvoiceStock;
 use App\Models\Stock;
 use Illuminate\Http\Request;
 use Validator;

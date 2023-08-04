@@ -37,6 +37,7 @@ class StockController extends BaseController
             'box_wholesale_price' => 'required|numeric',
             'unit_wholesale_price' => 'required|numeric',
             'quantity_by_boxes' => 'required|numeric',
+            'quantity_by_units' => 'required|numeric',
             'pharmacy_id' => 'required|numeric|exists:stores,id',
         ]);
 
@@ -52,13 +53,13 @@ class StockController extends BaseController
     /**
      * Display the specified resource.
      *
-     * @param int $barcode
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($barcode)
+    public function show($id)
     {
         //
-        $stock = Stock::where('barcode', $barcode)->first();
+        $stock = Stock::find($id);
         if (is_null($stock)) {
             return $this->sendError('Stock not found.');
         }
@@ -77,13 +78,14 @@ class StockController extends BaseController
     {
         //
         $validator = Validator::make($request->all(), [
-            'name' => 'sometimes|required|max:255|string',
+            'name' => 'required|max:255|string',
             'id' => 'sometimes|required|max:255|string',
             'unit_price' => 'sometimes|required|numeric',
             'box_price' => 'sometimes|required|numeric',
             'box_wholesale_price' => 'sometimes|required|numeric',
             'unit_wholesale_price' => 'sometimes|required|numeric',
             'quantity_by_boxes' => 'sometimes|required|numeric',
+            'quantity_by_units' => 'sometimes|required|numeric',
         ]);
 
         if ($validator->fails()) {
@@ -101,10 +103,9 @@ class StockController extends BaseController
      * @param int $barcode
      * @return \Illuminate\Http\Response
      */
-    public function destroy($barcode)
+    public function destroy($id)
     {
         //
-        $stock = Stock::where('barcode', $barcode)->first();
-        return $this->sendResponse(Stock::destroy($stock->id), "Stock deleted successfully");
+        return $this->sendResponse(Stock::destroy($id), "Stock deleted successfully");
     }
 }
