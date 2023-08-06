@@ -49,7 +49,7 @@ class CheckoutController extends BaseController
                     return $this->sendError('Stock not found');
                 }
                 if ($stockModel['quantity_by_units'] < $stock['quantity']){
-                    return $this->sendError('Validation Error.', 'Quantity is not in stock');
+                    return $this->sendError('Validation Error.', 'Quantity is not in stock', 422);
                 }
             }
         }
