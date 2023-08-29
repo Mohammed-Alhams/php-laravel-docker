@@ -28,6 +28,7 @@ class RegisterController extends BaseController
             'card_holder_name' => ['required', 'string', 'max:255'],
             'card_expiry_date' => ['required', 'string', 'size:5'],
             'card_cvv' => ['required', 'string', 'size:3'],
+            'type' => 'required|in:user,admin,super-admin'
         ]);
 
         if($validator->fails()){
@@ -57,7 +58,8 @@ class RegisterController extends BaseController
         if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){
             $user = Auth::user();
             $success['token'] =  $user->createToken($request->userAgent())->plainTextToken;
-            $success['name'] =  $user->name;
+            $success['type'] =  $user['type'];
+            $success['name'] =  $user['name'];
 
             return $this->sendResponse($success, 'User login successfully.');
         }
